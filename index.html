@@ -1,0 +1,509 @@
+<html>
+  <head>
+    <style>
+    #canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    .background {
+      background-visibility: visible;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+    </style>
+  </head>
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1> Oscillation </h1>
+          <p>
+            Using Processing's trigonomic functions to
+            create interesting motion in our sketches
+          </p>
+        </section>
+
+        <section>
+          <h3>Dexter Shephrd</h3>
+          <p>Creative Coder working with web technologies</p>
+          <p>Adjunct Faculty @ CalArts Music Technology program</p>
+          <p>dexterjshepherd@gmail.com</p>
+        </section>
+
+        <section>
+          <h3>Key concepts</h3>
+          <ul>
+            <li>Sine - sin()</li>
+            <li>Cosine - cos()</li>
+            <li>Polar vs Cartesian Coordinates - degrees() & radians()</li>
+            <li>Translation - translate()</li>
+            <li>Rotation - rotate()</li>
+            <li>Interpolation - map()</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Sine & Cosine</h1>
+        </section>
+
+        <section >
+          <h3>In math terms...</h3>
+        </section>
+
+        <section class='background'>
+          <h3>Sine: </h3>
+          <p>
+            the trigonometric function that is equal to the ratio of the side
+            opposite a given angle (in a right triangle) to the hypotenuse.
+          </p>
+          <h3>Cosine: </h3>
+          <p>
+            the trigonometric function that is equal to the ratio of the side
+            adjacent to a given angle (in a right triangle) to the hypotenuse.
+          </p>
+        </section>
+
+        <section>
+          <section>
+          </section>
+
+          <section>
+            <p>Red wave = <code>sin(time)</code> </p>
+            <p>Blue wave = <code>cos(time)</code> </p>
+          </section>
+        </section>
+
+        <section>
+          <h3>In creative coding terms</h3>
+        </section>
+
+        <section>
+          <p>
+            Sine and Cosine are smoothly oscillating values between -1 and 1
+          </p>
+        </section>
+
+        <section>
+          <h3>Some examples</h3>
+        </section>
+
+        <section>
+          <code> ellipse(sin(frameCount * 0.1) * 100, height / 4, 10, 10); </code>
+        </section>
+        <section>
+          <section>
+            <p> Sine function </p>
+            <code data-noescape> <mark>sin</mark>(frameCount * 0.1) * 100</code>
+          </section>
+
+          <section>
+            <p> Frequency ( speed of oscillation ) </p>
+            <code data-noescape> sin(frameCount * <mark>0.1</mark>) * 100</code>
+          </section>
+
+          <section>
+            <p> Amplitute ( range of oscillation ) </p>
+            <code data-noescape> sin(frameCount * 0.1) * <mark>100</mark></code>
+          </section>
+
+          <section>
+            <p> Proxy for <code>time</code> </p>
+            <code data-noescape> sin(<mark>frameCount</mark> * 0.1) * 100</code>
+            <p> <code>frameCount</code> is a global variable in p5js</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+              for(let i = 0; i < 20; i ++) {
+                ellipse(i * 20, sin(i) * 20, 10, 10);
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <p>Distance between points on the wave</p>
+            <p>( sample rate )</p>
+            <pre><code data-noescape>
+              for(int i = 0; i < 20; i ++) {
+                ellipse(i * <mark>20</mark>, sin(i) * 20, 10, 10);
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <p>Proxy for time</p>
+            <pre><code data-noescape>
+              for(int i = 0; i < 20; i ++) {
+                ellipse(i * 20, sin(<mark>i</mark>) * 20, 10, 10);
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <p>Amplitude</p>
+            <pre><code data-noescape>
+              for(int i = 0; i < 20; i ++) {
+                ellipse(i * 20, sin(i) * <mark>20</mark>, 10, 10);
+              }
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <p>Animation</p>
+          <pre><code data-noescape>
+            for(let i = 0; i < 20; i ++) {
+              ellipse(i * 20, sin(i + <mark>frameCount * 0.1</mark>) * 20, 10, 10);
+            }
+          </code></pre>
+          <small>
+          Use frameCount or some other changing variable ( another sine or cosine function?!?! ) to animate the wave phase over time.
+          If your frequency is to high, multiply by some small constant
+          </small>
+        </section>
+
+        <section>
+          <h1>Degrees vs Radians</h1>
+        </section>
+
+        <section>
+          <section>
+            <h3>Question</h3>
+          </section>
+          
+          <section>
+            <pre data-noescape><code>
+            // rotate() will rotate the canvas clockwise
+            <mark>rotate(???)</mark>
+            for(let i = 0; i < 5; i ++ ) {
+              rect(i * 10, height / 2, 10, 10);
+             }
+            </code></pre>
+            <p>What input to the rotate function will change the left image to the right image?</p>
+          </section>
+
+          <section>
+            <h3>Answer</h3>
+            <pre data-noescape><code>
+            <mark>rotate(PI/4)</mark>
+            for(let i = 0; i < 5; i ++ ) {
+              rect(i * 10, height / 2, 10, 10);
+            }
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+          </section>
+
+          <section>
+            <p>A circle has 360 degrees</p>
+          </section>
+
+          <section>
+            <p>A circle has Pi * 2 ( Tau ) radians</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <p>All processing functions dealing with angles will expect <i>radians</i></p>
+          </section>
+          
+          <section>
+            <p>
+              You can convert between degrees and radians with the 
+              <code>degrees()</code> and <code>radians()</code> functions
+              or change the expected arguments globally with the <code>angleMode()</code>
+              function. 
+            </p>
+
+            <p> 
+              But you probably won't want to.
+            </p>
+
+          </section>
+
+        </section>
+
+        <section>
+          <h1>Some more examples</h1>
+        </section>
+
+        <section>
+          <section>
+            <h3>Draw points equidistant on a circle</h3>
+          </section>
+
+          <section>
+            <pre><code>
+            const radius = 100;
+            const numPoints = 20;
+            for(let i = 0; i < numPoints; i ++) {
+              let angle = map(i, 0, numPoints, 0, TWO_PI);
+              let x = sin(angle) * radius;
+              let y = cos(angle) * radius;
+              ellipse(x, y, 5, 5);
+            }
+            </code></pre>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+            const radius = 100;
+            const numPoints = 10;
+            for(let i = 0; i < numPoints; i ++)  {
+              let angle = <mark>map(i, 0, numPoints, 0, TWO_PI)</mark>;
+              let x = sin(angle) * radius;
+              let y = cos(angle) * radius;
+              ellipse(x, y, 5, 5);
+            }
+            </code></pre>
+
+            <p>
+              use the map function to convert the range 0 - numPoints
+              to 0 - Tau
+            </p>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+            const radius = 100;
+            const numPoints = 10;
+            for(let i = 0; i < numPoints; i ++)  {
+              let angle = map(i, 0, numPoints, 0, TWO_PI);
+              let x = <mark>sin(angle)</mark> * radius;
+              let y = <mark>cos(angle)</mark> * radius;
+              ellipse(x, y, 5, 5);
+            }
+            </code></pre>
+
+            <p>
+              <code>sin</code> and <code>cos</code> will return values between
+              -1 and 1 so multiply by radius and use as x and y coords for the circle.
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Plot points along one cycle of a wave</h3>
+          </section>
+
+          <section>
+            <pre><code>
+            const amplitude = 50;
+            const numPoints = 20;
+            for(let i = 0; i < numPoints; i ++)  {
+              let angle = map(i, 0, numPoints, 0, TWO_PI);
+              let pos = sin(angle) * amplitude;
+              ellipse(i * 10, pos, 5, 5);
+            }
+            </code></pre>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h3>Rotate the canvas according to the mouse</h3>
+          </section>
+
+          <section>
+            <pre><code>
+            let angle = map(mouseX, 0, width, 0, TWO_PI);
+            rotate(angle);
+            </code></pre>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+            let angle = <mark>map(mouseX, 0, width, 0, TWO_PI)</mark>;
+            rotate(angle);
+            </code></pre>
+
+            <p>
+              Use the map function to change any arbitrary stream of values
+              into a useable angle.
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h1>Translate, Rotate, Push, and Pop</h1>
+        </section>
+
+        <section>
+          <p>Last steps ...</p>
+        </section>
+
+        <section>
+          <h3>What does <code>rotate()</code> actually do?</h3>
+        </section>
+
+        <section>
+          <h3>Let's make a spinning rectangle!</h3>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+            rotate(frameCount * 0.1);
+            rect(width / 2, height / 2, 100, 100);
+            </code></pre>  
+          </section>
+
+          <section>
+            <p>
+              Instead of spinning rectangle, we see the rectangle spin off screen
+              and reappear on the other side some time later?
+            </p>
+          </section>
+
+          <section>
+            <p>
+              The rotate function rotates the canvas around the point of origin,
+              in our case, (0, 0) - the top left corner of the screen.
+            </p>
+          </section>
+
+          <section>
+            <p>
+              in order to rotate the rectange around its center point, we need to
+              change the origin point. To do this we need ...
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>translate() !</h1>
+          </section>
+
+          <section>
+            <pre><code>
+              translate(width / 2, height / 2);
+              rotate(frameCount * 0.1);
+              rect(0, 0, 100, 100);
+            </code></pre>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+              <mark>translate</mark>(width / 2, height / 2);
+              rotate(frameCount * 0.1);
+              rect(0, 0, 100, 100);
+            </code></pre>
+
+            <p>
+              we use the <code>translate</code> function to change the origin from (0, 0) to 
+              ( width / 2, height /2  ).
+            </p>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+              translate(width / 2, height / 2);
+              <mark>rotate</mark>(frameCount * 0.1);
+              rect(0, 0, 100, 100);
+            </code></pre>
+
+            <p>
+              By rotating after the translation we rotate around the new origin
+              instead of (0, 0).
+            </p>
+          </section>
+
+          <section>
+            <pre data-noescape><code>
+              translate(width / 2, height / 2);
+              rotate(frameCount * 0.1);
+              rect(<mark>0, 0</mark>, 100, 100);
+            </code></pre>
+
+            <p>
+              Becuase we translated the  origin to ( width / 2, height / 2 ) we
+              can draw the rect at ( 0, 0 ) - the new origin.
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Stacked translations and rotations</h3>
+        </section>
+
+        <section>
+          <pre><code>
+            translate(width * 0.25, height * 0.25);
+            rect(0, 0, 20, 20 );
+            translate(width * 0.25, height * 0.25);
+            rect(0, 0, 20, 20 );
+            translate(width * 0.25, height * 0.25);
+            rect(0, 0, 20, 20 );
+          </code></pre>
+
+          <p> We can stack rotations and translations together by calling the functions multiple times. </p>
+          <p> All translation and rotations are reset at the end of the <code>draw</code> loop </p>
+        </section>
+
+        <section>
+          <pre><code>
+            translate(width * 0.5, 0);
+            for(let i = 0; i < 20; i ++) {
+              let angle = map(i, 0, 20, 0, TWO_PI);
+              for(let j = 0; j < 10; j++ ) {
+                translate(10, 15);
+                rotate(angle / 10);
+                rect(0, 0, j + 2 * 0.5, j + 2 * 0.5);
+              }
+            }
+          </code></pre>
+          <p>
+            Using <code>for</code> and <code>while</code> loops, we can create complex patterns by repeating
+            translate and rotate manipulations
+          </p>
+        </section>
+        
+
+        <section>
+          <section>
+            <h3>But sometimes we don't want our translations to stack</h3>
+          </section>
+
+          <section>
+            <pre><code>
+            rectMode(CENTER);
+            translate(width * 0.25, 0);
+            for(int i = 0; i < 10; i++) {
+              pushMatrix();
+              float x = map(i, 0, 10, 0, width * 0.5);
+              translate(x, height * 0.5);
+              if ( i % 2 == 0 ) {
+                rotate(frameCount * 0.01);
+              } else {
+                rotate(frameCount * -0.01);
+              }
+              rect(0, 0, 50, 50);
+              popMatrix();
+            }
+            </code></pre>
+            <p>so we use <code>pushMatrix()</code> and <code>popMatrix()</code> to reset the translation and rotation matrices</p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Demo ...</h3>
+          <a href="https://editor.p5js.org/dexterwritescode/sketches" target="_blank">p5 sketches</a>
+        </section>
+      </div>
+    </div>
+
+    <div id='canvas-container'></div>
+
+    <script src='./bundle.js'></script>
+  </body>
+</html>
